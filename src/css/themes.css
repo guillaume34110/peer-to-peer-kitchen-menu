@@ -1,0 +1,222 @@
+/* ==========================================================================
+   Thèmes visuels
+   ========================================================================== */
+
+/* Thème matin */
+.theme-morning {
+  --color-bg: #f8f9fa;
+  --color-bg-alt: #e9ecef;
+  --color-text: #212529;
+  --color-text-alt: #495057;
+  --color-primary: #0d6efd;
+  --color-secondary: #6c757d;
+  --color-accent: #fd7e14;
+  --color-success: #198754;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
+  --color-card-bg: #ffffff;
+  --color-card-shadow: rgba(0, 0, 0, 0.1);
+  --color-btn-bg: #e9ecef;
+  --color-btn-hover: #dee2e6;
+  --color-border: #e9ecef;
+  
+  /* Variables pour la texture en bois */
+  --texture-brightness: 1.1;
+  --texture-contrast: 1;
+  --texture-hue-rotate: 0deg;
+  --active-hue-shift: 210deg;
+  
+  /* Arrière-plan spécifique */
+  --bg-image: url('../assets/bg_morning.png');
+}
+
+/* Thème jour */
+.theme-day {
+  --color-bg: #ffffff;
+  --color-bg-alt: #f8f9fa;
+  --color-text: #212529;
+  --color-text-alt: #495057;
+  --color-primary: #0d6efd;
+  --color-secondary: #6c757d;
+  --color-accent: #fd7e14;
+  --color-success: #198754;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
+  --color-card-bg: #ffffff;
+  --color-card-shadow: rgba(0, 0, 0, 0.1);
+  --color-btn-bg: #e9ecef;
+  --color-btn-hover: #dee2e6;
+  --color-border: #e9ecef;
+  
+  /* Variables pour la texture en bois */
+  --texture-brightness: 1;
+  --texture-contrast: 1;
+  --texture-hue-rotate: 0deg;
+  --active-hue-shift: 210deg;
+  
+  /* Arrière-plan spécifique */
+  --bg-image: url('../assets/bgbbao.png');
+}
+
+/* Thème coucher de soleil */
+.theme-sunset {
+  --color-bg: #fff5f0;
+  --color-bg-alt: #ffe8e0;
+  --color-text: #4e2c10;
+  --color-text-alt: #6d3f1a;
+  --color-primary: #e74c3c;
+  --color-secondary: #d35400;
+  --color-accent: #f39c12;
+  --color-success: #27ae60;
+  --color-danger: #c0392b;
+  --color-warning: #f1c40f;
+  --color-card-bg: #ffffff;
+  --color-card-shadow: rgba(231, 76, 60, 0.15);
+  --color-btn-bg: #fde0d5;
+  --color-btn-hover: #fbc8b5;
+  --color-border: #f8d9cf;
+  
+  /* Variables pour la texture en bois */
+  --texture-brightness: 1.1;
+  --texture-contrast: 1.1;
+  --texture-hue-rotate: 15deg;
+  --active-hue-shift: 0deg;
+  
+  /* Arrière-plan spécifique */
+  --bg-image: url('../assets/bg_sunset.png');
+}
+
+/* Thème nuit */
+.theme-night {
+  --color-bg: #212529;
+  --color-bg-alt: #343a40;
+  --color-text: #f8f9fa;
+  --color-text-alt: #ced4da;
+  --color-primary: #3b8bfe;
+  --color-secondary: #adb5bd;
+  --color-accent: #ff922b;
+  --color-success: #2fb380;
+  --color-danger: #fa5252;
+  --color-warning: #ffca2c;
+  --color-card-bg: #343a40;
+  --color-card-shadow: rgba(0, 0, 0, 0.3);
+  --color-btn-bg: #495057;
+  --color-btn-hover: #6c757d;
+  --color-border: #495057;
+  
+  /* Variables pour la texture en bois */
+  --texture-brightness: 0.8;
+  --texture-contrast: 1;
+  --texture-hue-rotate: 0deg;
+  --active-hue-shift: 0deg;
+  
+  /* Arrière-plan spécifique */
+  --bg-image: url('../assets/bg_night.png');
+}
+
+/* Application des couleurs aux éléments */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Boutons */
+.btn-theme {
+  color: var(--color-text);
+}
+
+.btn-theme::before {
+  opacity: 0.85;
+  filter: brightness(var(--texture-brightness, 1)) contrast(var(--texture-contrast, 1));
+}
+
+.btn-theme:hover {
+  color: var(--color-text);
+}
+
+.btn-category {
+  color: var(--color-text);
+}
+
+.btn-category::before {
+  opacity: 0.85;
+  filter: brightness(var(--texture-brightness, 1)) contrast(var(--texture-contrast, 1));
+}
+
+.btn-category:hover {
+  color: var(--color-text);
+}
+
+.btn-category.active {
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.btn-category.active::before {
+  filter: brightness(var(--texture-brightness, 1)) contrast(var(--texture-contrast, 1)) hue-rotate(var(--texture-hue-rotate, 0deg));
+}
+
+.btn-theme.active::before,
+.btn-category.active::before {
+  opacity: 1;
+  filter: brightness(var(--texture-brightness)) contrast(var(--texture-contrast)) 
+          saturate(1.2) hue-rotate(calc(var(--texture-hue-rotate) + var(--active-hue-shift, 0deg)));
+  background-blend-mode: soft-light;
+  background-color: var(--color-primary);
+}
+
+/* Cartes des plats */
+.dish-card {
+  background-color: var(--color-card-bg);
+  box-shadow: 0 4px 12px var(--color-card-shadow);
+}
+
+.dish-name {
+  color: var(--color-text);
+}
+
+.dish-ingredients {
+  color: var(--color-text-alt);
+}
+
+.dish-quantity {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.dish-quantity.low {
+  background-color: var(--color-warning);
+}
+
+.dish-quantity.out {
+  background-color: var(--color-danger);
+}
+
+/* Indicateur de connexion */
+.connection-status[data-status="connected"] .status-icon {
+  color: var(--color-success);
+}
+
+.connection-status[data-status="connecting"] .status-icon {
+  color: var(--color-warning);
+}
+
+.connection-status[data-status="disconnected"] .status-icon {
+  color: var(--color-danger);
+}
+
+/* Loading indicator */
+.loading-indicator {
+  color: var(--color-text-alt);
+}
+
+.supplement-price {
+  font-weight: 600;
+}
+
+.supplement-tag:hover .supplement-price {
+  color: white;
+}
+
+
+

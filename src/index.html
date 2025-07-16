@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Restaurant</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/themes.css">
+</head>
+<body class="theme-light">
+
+  <main>
+    <div class="container">
+      <div class="top-bar">
+        <!-- Contrôles déplacés ici -->
+        <div class="controls">
+          <!-- Sélecteur de langue -->
+          <div class="language-selector">
+            <select id="language-select" class="language-select-dropdown">
+              <option value="fr">Français</option>
+              <option value="th">ไทย</option>
+            </select>
+          </div>
+          
+          <!-- Sélecteur de thème -->
+          <div class="theme-selector">
+            <button class="btn-theme" data-theme="morning">🌅</button>
+            <button class="btn-theme" data-theme="day">☀️</button>
+            <button class="btn-theme" data-theme="sunset">🌇</button>
+            <button class="btn-theme" data-theme="night">🌙</button>
+          </div>
+        </div>
+
+        <!-- Statut de connexion déplacé ici -->
+        <p class="connection-status" data-status="disconnected">
+          <span class="status-icon">⚪</span>
+        </p>
+      </div>
+
+      <!-- Navigation par catégories -->
+      <nav class="categories">
+        <h2 data-i18n="app.categories">Catégories</h2>
+        <div class="category-buttons">
+          <button class="btn-category active" data-category="all" data-i18n="category.all">Tous</button>
+          <!-- Les autres boutons de catégorie seront générés dynamiquement par JS -->
+        </div>
+      </nav>
+
+      <!-- Conteneur pour les plats -->
+      <section class="dishes-container">
+        <div id="dishes-grid">
+          <!-- Les plats seront générés dynamiquement par JS -->
+          <div class="loading-indicator">
+            <span data-i18n="app.loading">Chargement du menu...</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Template pour les cartes de plats -->
+  <template id="dish-template">
+    <article class="dish-card">
+      <div class="dish-image">
+        <img src="" alt="">
+        <div class="dish-quantity"></div>
+        <p class="dish-price"></p>
+      </div>
+      <div class="dish-content">
+        <h3 class="dish-name"></h3>
+        <p class="dish-ingredients"></p>
+        <div class="dish-supplements"></div>
+      </div>
+    </article>
+  </template>
+
+  <!-- Scripts -->
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/websocket.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script type="module" src="js/theme.js"></script>
+  <script type="module" src="js/menu.js"></script>
+</body>
+</html>
+
+
+
