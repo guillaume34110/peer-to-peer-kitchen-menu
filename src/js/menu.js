@@ -18,6 +18,17 @@ const filterDishesByCategory = (dishes, category) => {
 };
 
 /**
+ * Filtre les plats disponibles (exclut ceux avec quantité = 0)
+ */
+const filterAvailableDishes = (dishes) => {
+  return dishes.filter(dish => {
+    if (!dish.quantity) return true; // Si pas de quantité définie, on l'affiche
+    if (dish.quantity.infinite) return true; // Si quantité infinie, on l'affiche
+    return dish.quantity.amount > 0; // Sinon, on affiche seulement si quantité > 0
+  });
+};
+
+/**
  * Extrait les catégories uniques du menu
  */
 const extractCategories = (dishes) => {
@@ -169,7 +180,8 @@ const renderDishes = () => {
     return;
   }
 
-  const filteredDishes = filterDishesByCategory(menuData, currentCategory);
+  const availableDishes = filterAvailableDishes(menuData);
+  const filteredDishes = filterDishesByCategory(availableDishes, currentCategory);
   filteredDishes.forEach(dish => {
     const card = createDishCard(dish);
     if (card) container.appendChild(card);
