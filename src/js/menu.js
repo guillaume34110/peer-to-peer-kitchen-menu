@@ -121,7 +121,8 @@ const createDishCard = (dish) => {
     ]);
     const tagsContainer = createElement('div', { class: 'tags-container' });
     dish.ingredients.forEach(ingredient => {
-      tagsContainer.appendChild(createElement('span', { class: 'ingredient-tag' }, ingredient));
+      const ingredientName = ingredient[currentLang] || ingredient.fr || ingredient;
+      tagsContainer.appendChild(createElement('span', { class: 'ingredient-tag' }, ingredientName));
     });
     ingredientsElement.appendChild(labelElement);
     ingredientsElement.appendChild(tagsContainer);
