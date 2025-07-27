@@ -3,11 +3,13 @@
  */
 import { EVENTS, onEvent, createElement, formatPrice, emitEvent } from './utils.js';
 import { translate, getCurrentLanguage } from './i18n.js';
+import { requestIngredients } from './websocket.js';
 
 // État du menu
 let menuData = [];
 let currentCategory = 'all';
 let isLoading = true;
+let ingredientsData = {}; // Cache des ingrédients traduits
 
 /**
  * Filtre les plats selon la catégorie sélectionnée
@@ -26,6 +28,35 @@ const filterAvailableDishes = (dishes) => {
     if (dish.quantity.infinite) return true; // Si quantité infinie, on l'affiche
     return dish.quantity.amount > 0; // Sinon, on affiche seulement si quantité > 0
   });
+};
+
+/**
+ * Met à jour le cache des ingrédients traduits
+ */
+const updateIngredientsCache = (ingredients) => {
+  ingredientsData = {};
+  ingredients.forEach(ingredient => {
+    if (ingredient.id && ingredient.name) {
+      ingredientsData[ingredient.id] = ingredient.name;
+    }
+  });
+  console.log('[Menu] Cache des ingrédients mis à jour:', ingredientsData);
+};
+
+/**
+ * Traduit un ingrédient en utilisant le cache
+ */
+const translateIngredient = (ingredientKey) => {
+  const currentLang = getCurrentLanguage();
+  
+  if (ingredientsData[ingredientKey]) {
+    return ingredientsData[ingredientKey][currentLang] || 
+           ingredientsData[ingredientKey].fr || 
+           ingredientKey;
+  }
+  
+  // Fallback : utiliser la clé directement si pas dans le cache
+  return ingredientKey;
 };
 
 /**
@@ -121,7 +152,13 @@ const createDishCard = (dish) => {
     ]);
     const tagsContainer = createElement('div', { class: 'tags-container' });
     dish.ingredients.forEach(ingredient => {
-      const ingredientName = ingredient[currentLang] || ingredient.fr || ingredient;
+      let ingredientName;
+      if (typeof ingredient === 'object' && ingredient !== null) {
+        ingredientName = ingredient[currentLang] || ingredient.fr || ingredient.en || ingredient;
+      } else {
+        // Utiliser le cache des ingrédients pour la traduction
+        ingredientName = translateIngredient(ingredient);
+      }
       tagsContainer.appendChild(createElement('span', { class: 'ingredient-tag' }, ingredientName));
     });
     ingredientsElement.appendChild(labelElement);
@@ -215,6 +252,13 @@ export const initMenu = () => {
       renderDishes();
     }
   });
+  onEvent(EVENTS.INGREDIENTS_UPDATED, updateIngredientsCache);
+  
+  // Demander les ingrédients au serveur
+  setTimeout(() => {
+    requestIngredients();
+  }, 1000); // Attendre 1 seconde pour que la connexion WebSocket soit établie
+  
   document.querySelectorAll('.btn-category').forEach(btn => {
     btn.addEventListener('click', () => {
       selectCategory(btn.getAttribute('data-category'));

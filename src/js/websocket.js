@@ -102,7 +102,10 @@ const handleMessage = (event) => {
       console.log('[WebSocket] Format détecté: type=menuUpdate');
       console.log('[WebSocket] Menu reçu:', data.menu ? `${data.menu.length} plats` : 'Menu vide ou invalide');
       if (data.menu && data.menu.length > 0) {
-        console.log('[WebSocket] Premier plat:', JSON.stringify(data.menu[0]).substring(0, 150) + '...');
+        console.log('[WebSocket] Premier plat complet:', JSON.stringify(data.menu[0], null, 2));
+        if (data.menu[0].ingredients) {
+          console.log('[WebSocket] Ingrédients du premier plat:', JSON.stringify(data.menu[0].ingredients, null, 2));
+        }
       }
       
       console.log(`[WebSocket] Émission de l'événement ${EVENTS.MENU_UPDATED} avec ${data.menu?.length || 0} plats`);
@@ -113,7 +116,10 @@ const handleMessage = (event) => {
       console.log('[WebSocket] Format détecté: {menu: [...]}');
       console.log('[WebSocket] Menu reçu:', `${data.menu.length} plats`);
       if (data.menu.length > 0) {
-        console.log('[WebSocket] Premier plat:', JSON.stringify(data.menu[0]).substring(0, 150) + '...');
+        console.log('[WebSocket] Premier plat complet:', JSON.stringify(data.menu[0], null, 2));
+        if (data.menu[0].ingredients) {
+          console.log('[WebSocket] Ingrédients du premier plat:', JSON.stringify(data.menu[0].ingredients, null, 2));
+        }
       }
       
       console.log(`[WebSocket] Émission de l'événement ${EVENTS.MENU_UPDATED} avec ${data.menu.length} plats`);
@@ -124,15 +130,27 @@ const handleMessage = (event) => {
       console.log('[WebSocket] Format détecté: type=menuUpdate avec payload');
       console.log('[WebSocket] Menu reçu via payload:', data.payload ? `${data.payload.length} plats` : 'Payload vide ou invalide');
       if (data.payload && data.payload.length > 0) {
-        console.log('[WebSocket] Premier plat via payload:', JSON.stringify(data.payload[0]).substring(0, 150) + '...');
+        console.log('[WebSocket] Premier plat complet via payload:', JSON.stringify(data.payload[0], null, 2));
+        if (data.payload[0].ingredients) {
+          console.log('[WebSocket] Ingrédients du premier plat via payload:', JSON.stringify(data.payload[0].ingredients, null, 2));
+        }
       }
       
       console.log(`[WebSocket] Émission de l'événement ${EVENTS.MENU_UPDATED} avec ${data.payload?.length || 0} plats`);
       emitEvent(EVENTS.MENU_UPDATED, data.payload);
     }
+    else if (data.ingredients && Array.isArray(data.ingredients)) {
+      // Format: {ingredients: [...]}
+      console.log('[WebSocket] Format détecté: {ingredients: [...]}');
+      console.log('[WebSocket] Ingrédients reçus:', `${data.ingredients.length} ingrédients`);
+      console.log('[WebSocket] Ingrédients complets:', JSON.stringify(data.ingredients, null, 2));
+      
+      console.log(`[WebSocket] Émission de l'événement ${EVENTS.INGREDIENTS_UPDATED} avec ${data.ingredients.length} ingrédients`);
+      emitEvent(EVENTS.INGREDIENTS_UPDATED, data.ingredients);
+    }
     else {
       // Message non reconnu
-      console.log('[WebSocket] Message non reconnu comme menu:', JSON.stringify(data, null, 2));
+      console.log('[WebSocket] Message non reconnu comme menu ou ingrédients:', JSON.stringify(data, null, 2));
     }
     
     console.log('[WebSocket] ====== FIN TRAITEMENT MESSAGE ======');
@@ -285,6 +303,29 @@ export const connectToWebSocket = (url = DEFAULT_WS_URL) => {
 };
 
 /**
+ * Demande les ingrédients au serveur WebSocket
+ */
+export const requestIngredients = () => {
+  if (!socket || socket.readyState !== WebSocket.OPEN) {
+    console.error('[WebSocket] Impossible de demander les ingrédients: WebSocket non connecté');
+    return false;
+  }
+  
+  try {
+    const message = {
+      action: 'getIngredients',
+      timestamp: Date.now()
+    };
+    socket.send(JSON.stringify(message));
+    console.log('[WebSocket] Demande d\'ingrédients envoyée');
+    return true;
+  } catch (error) {
+    console.error('[WebSocket] Erreur lors de l\'envoi de la demande d\'ingrédients:', error);
+    return false;
+  }
+};
+
+/**
  * Initialise le module WebSocket
  */
 export const initWebSocket = (url = DEFAULT_WS_URL) => {
@@ -308,6 +349,7 @@ export const initWebSocket = (url = DEFAULT_WS_URL) => {
 
 export default {
   initWebSocket,
-  connectToWebSocket
+  connectToWebSocket,
+  requestIngredients
 };
 

@@ -130,7 +130,8 @@ export const EVENTS = {
   LANGUAGE_CHANGED: 'language:changed',
   THEME_CHANGED: 'theme:changed',
   CATEGORY_SELECTED: 'category:selected',
-  CONNECTION_STATUS_CHANGED: 'connection:status-changed'
+  CONNECTION_STATUS_CHANGED: 'connection:status-changed',
+  INGREDIENTS_UPDATED: 'ingredients:updated'
 };
 
 // Constantes pour les clés de stockage
