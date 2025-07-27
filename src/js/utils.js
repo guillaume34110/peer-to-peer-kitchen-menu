@@ -131,7 +131,8 @@ export const EVENTS = {
   THEME_CHANGED: 'theme:changed',
   CATEGORY_SELECTED: 'category:selected',
   CONNECTION_STATUS_CHANGED: 'connection:status-changed',
-  INGREDIENTS_UPDATED: 'ingredients:updated'
+  INGREDIENTS_UPDATED: 'ingredients:updated',
+  QR_CODES_UPDATED: 'qr-codes:updated'
 };
 
 // Constantes pour les clés de stockage

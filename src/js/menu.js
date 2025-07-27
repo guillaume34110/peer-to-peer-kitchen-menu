@@ -274,7 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
       initTheme();
       import('./websocket.js').then(({ initWebSocket }) => {
         initWebSocket();
-        initMenu();
+        import('./qrcode.js').then(({ initQRCode }) => {
+          initQRCode();
+          initMenu();
+        });
       });
     });
   });

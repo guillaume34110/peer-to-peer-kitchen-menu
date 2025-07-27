@@ -148,6 +148,15 @@ const handleMessage = (event) => {
       console.log(`[WebSocket] Émission de l'événement ${EVENTS.INGREDIENTS_UPDATED} avec ${data.ingredients.length} ingrédients`);
       emitEvent(EVENTS.INGREDIENTS_UPDATED, data.ingredients);
     }
+    else if (data.type === 'qr_codes_response' && data.qrCodes && typeof data.qrCodes === 'object') {
+      // Format: {type: 'qr_codes_response', qrCodes: {salle: {...}, menu: {...}}}
+      console.log('[WebSocket] Format détecté: qr_codes_response');
+      console.log('[WebSocket] QR codes reçus:', Object.keys(data.qrCodes));
+      console.log('[WebSocket] QR codes complets:', JSON.stringify(data.qrCodes, null, 2));
+      
+      console.log(`[WebSocket] Émission de l'événement ${EVENTS.QR_CODES_UPDATED} avec les QR codes`);
+      emitEvent(EVENTS.QR_CODES_UPDATED, data.qrCodes);
+    }
     else {
       // Message non reconnu
       console.log('[WebSocket] Message non reconnu comme menu ou ingrédients:', JSON.stringify(data, null, 2));
@@ -326,6 +335,29 @@ export const requestIngredients = () => {
 };
 
 /**
+ * Demande les QR codes au serveur WebSocket
+ */
+export const requestQRCodes = () => {
+  if (!socket || socket.readyState !== WebSocket.OPEN) {
+    console.error('[WebSocket] Impossible de demander les QR codes: WebSocket non connecté');
+    return false;
+  }
+  
+  try {
+    const message = {
+      type: 'get_qr_codes',
+      action: 'getQRCodes'
+    };
+    socket.send(JSON.stringify(message));
+    console.log('[WebSocket] Demande de QR codes envoyée:', message);
+    return true;
+  } catch (error) {
+    console.error('[WebSocket] Erreur lors de l\'envoi de la demande de QR codes:', error);
+    return false;
+  }
+};
+
+/**
  * Initialise le module WebSocket
  */
 export const initWebSocket = (url = DEFAULT_WS_URL) => {
@@ -350,6 +382,7 @@ export const initWebSocket = (url = DEFAULT_WS_URL) => {
 export default {
   initWebSocket,
   connectToWebSocket,
-  requestIngredients
+  requestIngredients,
+  requestQRCodes
 };
 
