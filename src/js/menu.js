@@ -117,7 +117,20 @@ const createDishCard = (dish) => {
   // Image, Nom, Prix, etc.
   card.querySelector('img').src = dish.image.startsWith('data:') ? dish.image : `data:image/jpeg;base64,${dish.image}`;
   card.querySelector('img').alt = dish.name[currentLang] || dish.name.fr || '';
-  card.querySelector('.dish-name').textContent = dish.name[currentLang] || dish.name.fr || '';
+  
+  // Nom et code de référence
+  const dishNameElement = card.querySelector('.dish-name');
+  const dishName = dish.name[currentLang] || dish.name.fr || '';
+  
+  if (dish.reference) {
+    dishNameElement.innerHTML = `
+      <span class="dish-name-text">${dishName}</span>
+      <span class="dish-reference">${dish.reference}</span>
+    `;
+  } else {
+    dishNameElement.textContent = dishName;
+  }
+  
   card.querySelector('.dish-price').textContent = formatPrice(dish.price);
 
   // Quantité
