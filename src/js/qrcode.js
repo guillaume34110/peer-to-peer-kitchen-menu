@@ -2,6 +2,7 @@
  * Module de gestion des QR codes via WebSocket
  */
 import { EVENTS, onEvent, emitEvent } from './utils.js';
+import { translate } from './i18n.js';
 import { requestQRCodes } from './websocket.js';
 
 // État des QR codes
@@ -26,7 +27,7 @@ const openQRModal = () => {
       const menuElement = document.getElementById('qr-menu');
       if (menuElement) {
         menuElement.innerHTML = `
-          <div class="qr-loading">Demande des QR codes en cours...</div>
+          <div class="qr-loading" data-i18n="qr.request.pending">${translate('qr.request.pending')}</div>
         `;
       }
     }
@@ -39,7 +40,7 @@ const openQRModal = () => {
       const menuElement = document.getElementById('qr-menu');
       if (menuElement && !qrCodesData) {
         menuElement.innerHTML = `
-          <div class="qr-loading">Erreur: Impossible de récupérer le QR code</div>
+          <div class="qr-loading" data-i18n="qr.request.error">${translate('qr.request.error')}</div>
         `;
       }
     }, 10000);
@@ -74,24 +75,24 @@ const displayQRCodes = (qrCodes) => {
   if (menuElement && qrCodes.menu) {
     if (qrCodes.menu.qrCodeDataURL) {
       menuElement.innerHTML = `
-        <img src="${qrCodes.menu.qrCodeDataURL}" alt="QR Code Menu" />
+        <img src="${qrCodes.menu.qrCodeDataURL}" data-i18n-attr="alt:qr.menu.alt" alt="${translate('qr.menu.alt')}" />
         <div class="qr-url">${qrCodes.menu.url}</div>
       `;
     } else if (qrCodes.menu.qrCode) {
       // Fallback pour l'ancien format
       menuElement.innerHTML = `
-        <img src="${qrCodes.menu.qrCode}" alt="QR Code Menu" />
+        <img src="${qrCodes.menu.qrCode}" data-i18n-attr="alt:qr.menu.alt" alt="${translate('qr.menu.alt')}" />
         <div class="qr-url">${qrCodes.menu.url}</div>
       `;
     } else {
       menuElement.innerHTML = `
-        <div class="qr-loading">QR Code non disponible</div>
+        <div class="qr-loading" data-i18n="qr.menu.unavailable">${translate('qr.menu.unavailable')}</div>
         <div class="qr-url">${qrCodes.menu.url}</div>
       `;
     }
   } else if (menuElement) {
     menuElement.innerHTML = `
-      <div class="qr-loading">QR Code du menu non disponible</div>
+      <div class="qr-loading" data-i18n="qr.menu.missing">${translate('qr.menu.missing')}</div>
     `;
   }
 };

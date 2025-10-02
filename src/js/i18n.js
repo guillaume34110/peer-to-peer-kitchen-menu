@@ -7,6 +7,13 @@ import { getStoredData, storeData, EVENTS, STORAGE_KEYS, emitEvent } from './uti
 const AVAILABLE_LANGUAGES = ['fr', 'en', 'de', 'ru', 'zh', 'ko', 'ja', 'es', 'it', 'nl', 'pt', 'th'];
 const DEFAULT_LANGUAGE = 'fr';
 
+const normalizeLanguage = (lang) => {
+  if (!lang) {
+    return DEFAULT_LANGUAGE;
+  }
+  return String(lang).toLowerCase().split('-')[0].trim();
+};
+
 // Traductions
 const translations = {
   fr: {
@@ -18,6 +25,11 @@ const translations = {
     'qr.menu.heading': 'Scannez pour accéder au menu',
     'qr.menu.loading': 'Chargement...',
     'qr.menu.button': 'Afficher les QR codes',
+    'qr.request.pending': 'Demande des QR codes en cours...',
+    'qr.request.error': 'Erreur: Impossible de récupérer le QR code',
+    'qr.menu.alt': 'QR Code du menu',
+    'qr.menu.unavailable': 'QR Code non disponible',
+    'qr.menu.missing': 'QR Code du menu non disponible',
     'app.footer': '© 2023 Restaurant - Menu en temps réel',
     'category.all': 'Tous',
     'connection.connected': 'Connecté',
@@ -40,6 +52,11 @@ const translations = {
     'qr.menu.heading': 'Scan to access the menu',
     'qr.menu.loading': 'Loading...',
     'qr.menu.button': 'Show QR codes',
+    'qr.request.pending': 'Requesting QR codes...',
+    'qr.request.error': 'Error: Unable to fetch the QR code',
+    'qr.menu.alt': 'Menu QR code',
+    'qr.menu.unavailable': 'QR code not available',
+    'qr.menu.missing': 'Menu QR code not available',
     'app.footer': '© 2023 Restaurant - Real-time menu',
     'category.all': 'All',
     'connection.connected': 'Connected',
@@ -62,6 +79,11 @@ const translations = {
     'qr.menu.heading': 'Zum Menü scannen',
     'qr.menu.loading': 'Wird geladen...',
     'qr.menu.button': 'QR-Codes anzeigen',
+    'qr.request.pending': 'QR-Codes werden angefordert...',
+    'qr.request.error': 'Fehler: QR-Code kann nicht abgerufen werden',
+    'qr.menu.alt': 'Menü-QR-Code',
+    'qr.menu.unavailable': 'QR-Code nicht verfügbar',
+    'qr.menu.missing': 'Menü-QR-Code nicht verfügbar',
     'app.footer': '© 2023 Restaurant - Echtzeitmenü',
     'category.all': 'Alle',
     'connection.connected': 'Verbunden',
@@ -84,6 +106,11 @@ const translations = {
     'qr.menu.heading': 'Отсканируйте, чтобы открыть меню',
     'qr.menu.loading': 'Загрузка...',
     'qr.menu.button': 'Показать QR-коды',
+    'qr.request.pending': 'Запрос QR-кодов...',
+    'qr.request.error': 'Ошибка: не удалось получить QR-код',
+    'qr.menu.alt': 'QR-код меню',
+    'qr.menu.unavailable': 'QR-код недоступен',
+    'qr.menu.missing': 'QR-код меню недоступен',
     'app.footer': '© 2023 Ресторан - меню в реальном времени',
     'category.all': 'Все',
     'connection.connected': 'Подключено',
@@ -106,6 +133,11 @@ const translations = {
     'qr.menu.heading': '扫描以查看菜单',
     'qr.menu.loading': '正在加载...',
     'qr.menu.button': '显示二维码',
+    'qr.request.pending': '正在请求二维码...',
+    'qr.request.error': '错误：无法获取二维码',
+    'qr.menu.alt': '菜单二维码',
+    'qr.menu.unavailable': '二维码不可用',
+    'qr.menu.missing': '菜单二维码不可用',
     'app.footer': '© 2023 餐厅 - 实时菜单',
     'category.all': '全部',
     'connection.connected': '已连接',
@@ -128,6 +160,11 @@ const translations = {
     'qr.menu.heading': '메뉴에 접속하려면 스캔하세요',
     'qr.menu.loading': '불러오는 중...',
     'qr.menu.button': 'QR 코드 보기',
+    'qr.request.pending': 'QR 코드를 요청하는 중...',
+    'qr.request.error': '오류: QR 코드를 가져올 수 없습니다',
+    'qr.menu.alt': '메뉴 QR 코드',
+    'qr.menu.unavailable': 'QR 코드를 사용할 수 없습니다',
+    'qr.menu.missing': '메뉴 QR 코드를 사용할 수 없습니다',
     'app.footer': '© 2023 레스토랑 - 실시간 메뉴',
     'category.all': '전체',
     'connection.connected': '연결됨',
@@ -150,6 +187,11 @@ const translations = {
     'qr.menu.heading': 'メニューを見るにはスキャンしてください',
     'qr.menu.loading': '読み込み中...',
     'qr.menu.button': 'QRコードを表示',
+    'qr.request.pending': 'QRコードを要求しています...',
+    'qr.request.error': 'エラー: QRコードを取得できません',
+    'qr.menu.alt': 'メニューQRコード',
+    'qr.menu.unavailable': 'QRコードは利用できません',
+    'qr.menu.missing': 'メニューQRコードは利用できません',
     'app.footer': '© 2023 レストラン - リアルタイムメニュー',
     'category.all': 'すべて',
     'connection.connected': '接続済み',
@@ -172,6 +214,11 @@ const translations = {
     'qr.menu.heading': 'Escanee para acceder al menú',
     'qr.menu.loading': 'Cargando...',
     'qr.menu.button': 'Mostrar códigos QR',
+    'qr.request.pending': 'Solicitando códigos QR...',
+    'qr.request.error': 'Error: no se pudo obtener el código QR',
+    'qr.menu.alt': 'Código QR del menú',
+    'qr.menu.unavailable': 'Código QR no disponible',
+    'qr.menu.missing': 'Código QR del menú no disponible',
     'app.footer': '© 2023 Restaurante - Menú en tiempo real',
     'category.all': 'Todos',
     'connection.connected': 'Conectado',
@@ -194,6 +241,11 @@ const translations = {
     'qr.menu.heading': 'Scansiona per accedere al menu',
     'qr.menu.loading': 'Caricamento...',
     'qr.menu.button': 'Mostra i QR code',
+    'qr.request.pending': 'Richiesta dei codici QR in corso...',
+    'qr.request.error': 'Errore: impossibile recuperare il QR code',
+    'qr.menu.alt': 'QR code del menu',
+    'qr.menu.unavailable': 'QR code non disponibile',
+    'qr.menu.missing': 'QR code del menu non disponibile',
     'app.footer': '© 2023 Ristorante - Menu in tempo reale',
     'category.all': 'Tutti',
     'connection.connected': 'Connesso',
@@ -216,6 +268,11 @@ const translations = {
     'qr.menu.heading': 'Scan om het menu te bekijken',
     'qr.menu.loading': 'Bezig met laden...',
     'qr.menu.button': 'QR-codes tonen',
+    'qr.request.pending': 'QR-codes worden aangevraagd...',
+    'qr.request.error': 'Fout: QR-code kan niet worden opgehaald',
+    'qr.menu.alt': 'Menu QR-code',
+    'qr.menu.unavailable': 'QR-code niet beschikbaar',
+    'qr.menu.missing': 'Menu QR-code niet beschikbaar',
     'app.footer': '© 2023 Restaurant - Menu in realtime',
     'category.all': 'Alle',
     'connection.connected': 'Verbonden',
@@ -238,6 +295,11 @@ const translations = {
     'qr.menu.heading': 'Escaneie para acessar o menu',
     'qr.menu.loading': 'Carregando...',
     'qr.menu.button': 'Mostrar QR codes',
+    'qr.request.pending': 'Solicitando códigos QR...',
+    'qr.request.error': 'Erro: não foi possível obter o QR code',
+    'qr.menu.alt': 'QR code do menu',
+    'qr.menu.unavailable': 'QR code indisponível',
+    'qr.menu.missing': 'QR code do menu indisponível',
     'app.footer': '© 2023 Restaurante - Menu em tempo real',
     'category.all': 'Todos',
     'connection.connected': 'Conectado',
@@ -260,6 +322,11 @@ const translations = {
     'qr.menu.heading': 'สแกนเพื่อเปิดเมนู',
     'qr.menu.loading': 'กำลังโหลด...',
     'qr.menu.button': 'แสดงคิวอาร์โค้ด',
+    'qr.request.pending': 'กำลังร้องขอโค้ด QR...',
+    'qr.request.error': 'ข้อผิดพลาด: ไม่สามารถดึง QR code ได้',
+    'qr.menu.alt': 'คิวอาร์โค้ดของเมนู',
+    'qr.menu.unavailable': 'ไม่มีคิวอาร์โค้ด',
+    'qr.menu.missing': 'ไม่มีคิวอาร์โค้ดของเมนู',
     'app.footer': '© 2023 ร้านอาหาร - เมนูเรียลไทม์',
     'category.all': 'ทั้งหมด',
     'connection.connected': 'เชื่อมต่อแล้ว',
@@ -278,7 +345,7 @@ const translations = {
 /**
  * État actuel de la langue
  */
-let currentLanguage = getStoredData(STORAGE_KEYS.LANGUAGE, DEFAULT_LANGUAGE);
+let currentLanguage = normalizeLanguage(getStoredData(STORAGE_KEYS.LANGUAGE, DEFAULT_LANGUAGE));
 if (!AVAILABLE_LANGUAGES.includes(currentLanguage)) {
   currentLanguage = DEFAULT_LANGUAGE;
 }
@@ -294,16 +361,18 @@ export const getCurrentLanguage = () => currentLanguage;
  * @param {string} lang - Code de la langue
  */
 export const setLanguage = (lang) => {
-  if (!AVAILABLE_LANGUAGES.includes(lang)) {
+  const normalizedLang = normalizeLanguage(lang);
+
+  if (!AVAILABLE_LANGUAGES.includes(normalizedLang)) {
     console.error(`Langue non supportée: ${lang}`);
     return;
   }
   
-  currentLanguage = lang;
-  storeData(STORAGE_KEYS.LANGUAGE, lang);
+  currentLanguage = normalizedLang;
+  storeData(STORAGE_KEYS.LANGUAGE, currentLanguage);
 
   if (typeof document !== 'undefined') {
-    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('lang', currentLanguage);
   }
 
   updateDOMTranslations();
@@ -311,11 +380,11 @@ export const setLanguage = (lang) => {
   // Mettre à jour la valeur du sélecteur
   const select = document.getElementById('language-select');
   if (select) {
-    select.value = lang;
+    select.value = currentLanguage;
   }
   
   // Émettre un événement pour informer les autres modules
-  emitEvent(EVENTS.LANGUAGE_CHANGED, lang);
+  emitEvent(EVENTS.LANGUAGE_CHANGED, currentLanguage);
 };
 
 /**

@@ -5,7 +5,7 @@ Une application web statique permettant la consultation du menu d'un restaurant 
 ## Fonctionnalités
 
 - 🌐 Connexion WebSocket pour recevoir les mises à jour du menu en temps réel
-- 🌍 Support multilingue (français et thaï)
+- 🌍 Support multilingue (français, anglais, allemand, russe, chinois, coréen, japonais, espagnol, italien, néerlandais, portugais, thaï)
 - 🔍 Filtrage des plats par catégories
 - 🎨 Plusieurs thèmes visuels disponibles (clair, sombre, coloré)
 - 📱 Design responsive (mobile, tablette, desktop)
