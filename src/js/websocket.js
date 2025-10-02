@@ -2,6 +2,7 @@
  * Module de gestion de la connexion WebSocket
  */
 import { EVENTS, emitEvent } from './utils.js';
+import { translate } from './i18n.js';
 
 // Configuration WebSocket
 const WS_URLS = {
@@ -69,7 +70,7 @@ const updateConnectionStatus = (state) => {
     if (textElement) {
       const key = `connection.${state}`;
       textElement.setAttribute('data-i18n', key);
-      // La traduction sera appliquée par le module i18n
+      textElement.textContent = translate(key);
     }
   }
   
@@ -385,4 +386,3 @@ export default {
   requestIngredients,
   requestQRCodes
 };
-

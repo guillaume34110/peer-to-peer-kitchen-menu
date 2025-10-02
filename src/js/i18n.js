@@ -13,6 +13,11 @@ const translations = {
     'app.title': 'Menu Restaurant',
     'app.categories': 'Catégories',
     'app.loading': 'Chargement du menu...',
+    'menu.empty': 'Aucun plat disponible.',
+    'qr.menu.title': 'Menu QR Code',
+    'qr.menu.heading': 'Scannez pour accéder au menu',
+    'qr.menu.loading': 'Chargement...',
+    'qr.menu.button': 'Afficher les QR codes',
     'app.footer': '© 2023 Restaurant - Menu en temps réel',
     'category.all': 'Tous',
     'connection.connected': 'Connecté',
@@ -30,6 +35,11 @@ const translations = {
     'app.title': 'Restaurant Menu',
     'app.categories': 'Categories',
     'app.loading': 'Loading menu...',
+    'menu.empty': 'No dishes available.',
+    'qr.menu.title': 'QR Code Menu',
+    'qr.menu.heading': 'Scan to access the menu',
+    'qr.menu.loading': 'Loading...',
+    'qr.menu.button': 'Show QR codes',
     'app.footer': '© 2023 Restaurant - Real-time menu',
     'category.all': 'All',
     'connection.connected': 'Connected',
@@ -47,6 +57,11 @@ const translations = {
     'app.title': 'Restaurantmenü',
     'app.categories': 'Kategorien',
     'app.loading': 'Menü wird geladen...',
+    'menu.empty': 'Keine Gerichte verfügbar.',
+    'qr.menu.title': 'QR-Code-Menü',
+    'qr.menu.heading': 'Zum Menü scannen',
+    'qr.menu.loading': 'Wird geladen...',
+    'qr.menu.button': 'QR-Codes anzeigen',
     'app.footer': '© 2023 Restaurant - Echtzeitmenü',
     'category.all': 'Alle',
     'connection.connected': 'Verbunden',
@@ -64,6 +79,11 @@ const translations = {
     'app.title': 'Меню ресторана',
     'app.categories': 'Категории',
     'app.loading': 'Загрузка меню...',
+    'menu.empty': 'Нет доступных блюд.',
+    'qr.menu.title': 'Меню с QR-кодом',
+    'qr.menu.heading': 'Отсканируйте, чтобы открыть меню',
+    'qr.menu.loading': 'Загрузка...',
+    'qr.menu.button': 'Показать QR-коды',
     'app.footer': '© 2023 Ресторан - меню в реальном времени',
     'category.all': 'Все',
     'connection.connected': 'Подключено',
@@ -81,6 +101,11 @@ const translations = {
     'app.title': '餐厅菜单',
     'app.categories': '分类',
     'app.loading': '正在加载菜单...',
+    'menu.empty': '暂无可用菜品。',
+    'qr.menu.title': '二维码菜单',
+    'qr.menu.heading': '扫描以查看菜单',
+    'qr.menu.loading': '正在加载...',
+    'qr.menu.button': '显示二维码',
     'app.footer': '© 2023 餐厅 - 实时菜单',
     'category.all': '全部',
     'connection.connected': '已连接',
@@ -98,6 +123,11 @@ const translations = {
     'app.title': '레스토랑 메뉴',
     'app.categories': '카테고리',
     'app.loading': '메뉴 불러오는 중...',
+    'menu.empty': '이용 가능한 메뉴가 없습니다.',
+    'qr.menu.title': 'QR 코드 메뉴',
+    'qr.menu.heading': '메뉴에 접속하려면 스캔하세요',
+    'qr.menu.loading': '불러오는 중...',
+    'qr.menu.button': 'QR 코드 보기',
     'app.footer': '© 2023 레스토랑 - 실시간 메뉴',
     'category.all': '전체',
     'connection.connected': '연결됨',
@@ -115,6 +145,11 @@ const translations = {
     'app.title': 'レストランメニュー',
     'app.categories': 'カテゴリ',
     'app.loading': 'メニューを読み込み中...',
+    'menu.empty': '利用できる料理がありません。',
+    'qr.menu.title': 'QRコードメニュー',
+    'qr.menu.heading': 'メニューを見るにはスキャンしてください',
+    'qr.menu.loading': '読み込み中...',
+    'qr.menu.button': 'QRコードを表示',
     'app.footer': '© 2023 レストラン - リアルタイムメニュー',
     'category.all': 'すべて',
     'connection.connected': '接続済み',
@@ -132,6 +167,11 @@ const translations = {
     'app.title': 'Menú del restaurante',
     'app.categories': 'Categorías',
     'app.loading': 'Cargando el menú...',
+    'menu.empty': 'No hay platos disponibles.',
+    'qr.menu.title': 'Menú con código QR',
+    'qr.menu.heading': 'Escanee para acceder al menú',
+    'qr.menu.loading': 'Cargando...',
+    'qr.menu.button': 'Mostrar códigos QR',
     'app.footer': '© 2023 Restaurante - Menú en tiempo real',
     'category.all': 'Todos',
     'connection.connected': 'Conectado',
@@ -149,6 +189,11 @@ const translations = {
     'app.title': 'Menu del ristorante',
     'app.categories': 'Categorie',
     'app.loading': 'Caricamento del menu...',
+    'menu.empty': 'Nessun piatto disponibile.',
+    'qr.menu.title': 'Menu con QR code',
+    'qr.menu.heading': 'Scansiona per accedere al menu',
+    'qr.menu.loading': 'Caricamento...',
+    'qr.menu.button': 'Mostra i QR code',
     'app.footer': '© 2023 Ristorante - Menu in tempo reale',
     'category.all': 'Tutti',
     'connection.connected': 'Connesso',
@@ -166,6 +211,11 @@ const translations = {
     'app.title': 'Restaurantmenu',
     'app.categories': 'Categorieën',
     'app.loading': 'Menu wordt geladen...',
+    'menu.empty': 'Geen gerechten beschikbaar.',
+    'qr.menu.title': 'QR-codemenu',
+    'qr.menu.heading': 'Scan om het menu te bekijken',
+    'qr.menu.loading': 'Bezig met laden...',
+    'qr.menu.button': 'QR-codes tonen',
     'app.footer': '© 2023 Restaurant - Menu in realtime',
     'category.all': 'Alle',
     'connection.connected': 'Verbonden',
@@ -183,6 +233,11 @@ const translations = {
     'app.title': 'Menu do restaurante',
     'app.categories': 'Categorias',
     'app.loading': 'Carregando o menu...',
+    'menu.empty': 'Nenhum prato disponível.',
+    'qr.menu.title': 'Menu com QR Code',
+    'qr.menu.heading': 'Escaneie para acessar o menu',
+    'qr.menu.loading': 'Carregando...',
+    'qr.menu.button': 'Mostrar QR codes',
     'app.footer': '© 2023 Restaurante - Menu em tempo real',
     'category.all': 'Todos',
     'connection.connected': 'Conectado',
@@ -200,6 +255,11 @@ const translations = {
     'app.title': 'เมนูร้านอาหาร',
     'app.categories': 'หมวดหมู่',
     'app.loading': 'กำลังโหลดเมนู...',
+    'menu.empty': 'ไม่มีเมนูให้บริการ',
+    'qr.menu.title': 'เมนูคิวอาร์โค้ด',
+    'qr.menu.heading': 'สแกนเพื่อเปิดเมนู',
+    'qr.menu.loading': 'กำลังโหลด...',
+    'qr.menu.button': 'แสดงคิวอาร์โค้ด',
     'app.footer': '© 2023 ร้านอาหาร - เมนูเรียลไทม์',
     'category.all': 'ทั้งหมด',
     'connection.connected': 'เชื่อมต่อแล้ว',
@@ -219,6 +279,9 @@ const translations = {
  * État actuel de la langue
  */
 let currentLanguage = getStoredData(STORAGE_KEYS.LANGUAGE, DEFAULT_LANGUAGE);
+if (!AVAILABLE_LANGUAGES.includes(currentLanguage)) {
+  currentLanguage = DEFAULT_LANGUAGE;
+}
 
 /**
  * Obtient la langue actuelle
@@ -238,6 +301,11 @@ export const setLanguage = (lang) => {
   
   currentLanguage = lang;
   storeData(STORAGE_KEYS.LANGUAGE, lang);
+
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('lang', lang);
+  }
+
   updateDOMTranslations();
   
   // Mettre à jour la valeur du sélecteur
@@ -272,10 +340,33 @@ export const translate = (key, params = {}) => {
  * Met à jour toutes les traductions dans le DOM
  */
 const updateDOMTranslations = () => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   document.querySelectorAll('[data-i18n]').forEach(element => {
     const key = element.getAttribute('data-i18n');
     element.textContent = translate(key);
   });
+
+  document.querySelectorAll('[data-i18n-attr]').forEach(element => {
+    const mappings = element.getAttribute('data-i18n-attr');
+    if (!mappings) {
+      return;
+    }
+
+    mappings.split(';').forEach(mapping => {
+      const [attribute, key] = mapping.split(':').map(part => part && part.trim());
+      if (attribute && key) {
+        element.setAttribute(attribute, translate(key));
+      }
+    });
+  });
+
+  const translatedTitle = translate('app.title');
+  if (document.title !== translatedTitle) {
+    document.title = translatedTitle;
+  }
 };
 
 /**
@@ -301,5 +392,3 @@ export default {
   getCurrentLanguage,
   setLanguage
 };
-
-

@@ -227,7 +227,9 @@ const renderDishes = () => {
   }
 
   if (!menuData || menuData.length === 0) {
-    container.appendChild(createElement('div', { 'class': 'empty-message' }, 'Aucun plat disponible.'));
+    container.appendChild(
+      createElement('div', { 'class': 'empty-message', 'data-i18n': 'menu.empty' }, translate('menu.empty'))
+    );
     return;
   }
 
