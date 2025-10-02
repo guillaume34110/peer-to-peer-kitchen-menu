@@ -2,7 +2,7 @@
  * Module de gestion de l'affichage et du filtrage du menu
  */
 import { EVENTS, onEvent, createElement, formatPrice, emitEvent } from './utils.js';
-import { translate, getCurrentLanguage } from './i18n.js';
+import { translate, getCurrentLanguage, normalizeLanguage } from './i18n.js';
 import { requestIngredients } from './websocket.js';
 
 // État du menu
@@ -10,6 +10,47 @@ let menuData = [];
 let currentCategory = 'all';
 let isLoading = true;
 let ingredientsData = {}; // Cache des ingrédients traduits
+
+const FALLBACK_LANGUAGES = ['fr', 'en', 'th'];
+
+const resolveLocalizedText = (value, lang, fallbacks = FALLBACK_LANGUAGES) => {
+  if (!value) {
+    return '';
+  }
+
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  const normalizedLang = normalizeLanguage(lang);
+  const entries = Object.entries(value);
+  if (entries.length === 0) {
+    return '';
+  }
+
+  if (value[lang]) {
+    return value[lang];
+  }
+
+  const normalizedMatch = entries.find(([key]) => normalizeLanguage(key) === normalizedLang);
+  if (normalizedMatch) {
+    return normalizedMatch[1];
+  }
+
+  for (const fallback of fallbacks) {
+    const match = entries.find(([key]) => normalizeLanguage(key) === normalizeLanguage(fallback));
+    if (match) {
+      return match[1];
+    }
+  }
+
+  const stringEntry = entries.find(([, val]) => typeof val === 'string');
+  if (stringEntry) {
+    return stringEntry[1];
+  }
+
+  return '';
+};
 
 /**
  * Filtre les plats selon la catégorie sélectionnée
@@ -50,9 +91,7 @@ const translateIngredient = (ingredientKey) => {
   const currentLang = getCurrentLanguage();
   
   if (ingredientsData[ingredientKey]) {
-    return ingredientsData[ingredientKey][currentLang] || 
-           ingredientsData[ingredientKey].fr || 
-           ingredientKey;
+    return resolveLocalizedText(ingredientsData[ingredientKey], currentLang) || ingredientKey;
   }
   
   // Fallback : utiliser la clé directement si pas dans le cache
@@ -87,7 +126,7 @@ const createCategoryButtons = (categories) => {
     const button = createElement('button', {
       'class': 'btn-category',
       'data-category': category.id
-    }, category.name[currentLang] || category.name.fr || category.id);
+    }, resolveLocalizedText(category.name, currentLang) || category.id);
     button.addEventListener('click', () => selectCategory(category.id));
     container.appendChild(button);
   });
@@ -116,11 +155,11 @@ const createDishCard = (dish) => {
 
   // Image, Nom, Prix, etc.
   card.querySelector('img').src = dish.image.startsWith('data:') ? dish.image : `data:image/jpeg;base64,${dish.image}`;
-  card.querySelector('img').alt = dish.name[currentLang] || dish.name.fr || '';
+  card.querySelector('img').alt = resolveLocalizedText(dish.name, currentLang);
   
   // Nom et code de référence
   const dishNameElement = card.querySelector('.dish-name');
-  const dishName = dish.name[currentLang] || dish.name.fr || '';
+  const dishName = resolveLocalizedText(dish.name, currentLang);
   
   if (dish.reference) {
     dishNameElement.innerHTML = `
@@ -167,7 +206,7 @@ const createDishCard = (dish) => {
     dish.ingredients.forEach(ingredient => {
       let ingredientName;
       if (typeof ingredient === 'object' && ingredient !== null) {
-        ingredientName = ingredient[currentLang] || ingredient.fr || ingredient.en || ingredient;
+        ingredientName = resolveLocalizedText(ingredient, currentLang) || ingredient;
       } else {
         // Utiliser le cache des ingrédients pour la traduction
         ingredientName = translateIngredient(ingredient);
@@ -188,7 +227,7 @@ const createDishCard = (dish) => {
     const tagsContainer = createElement('div', { class: 'tags-container supplements-tags' });
     dish.supplements.forEach(supplement => {
       const price = formatPrice(supplement.price || dish.supplementPrice || 0);
-      const name = supplement.name[currentLang] || supplement.name.fr || '';
+      const name = resolveLocalizedText(supplement.name, currentLang);
       const tagElement = createElement('span', { class: 'supplement-tag' }, [
         createElement('span', { class: 'supplement-name' }, name),
         createElement('span', { class: 'supplement-price' }, translate('dish.supplement.price', { price }))
